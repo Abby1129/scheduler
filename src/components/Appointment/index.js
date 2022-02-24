@@ -1,16 +1,21 @@
-import React from "react";
-
-import Header from "./Header";
-
+import React, { Fragment } from "react";
 import "components/Appointment/styles.scss";
+import Header from "./Header";
+import Empty from "./Empty";
+import Show from "./Show";
 
 export default function Appointment(props) {
   return (
-    <article className="appointment" data-testid="appointment">
-      <header className="appointment__header">
-        <h3 className="text--regular">No appointments</h3>
-        <h3 className="text--light">{props.time}</h3>
-      </header>
+    <article className="appointment">
+      <Header time={props.time} />
+      {props.interview ? (
+        <Show
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
+        />
+      ) : (
+        <Empty />
+      )}
     </article>
   );
 }
