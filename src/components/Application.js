@@ -4,7 +4,7 @@ import axios from "axios";
 
 import DayList from "./DayList";
 import Appointment from "components/Appointment";
-import getAppointmentsForDay from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 import "components/Application.scss";
 
@@ -72,22 +72,27 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     appointments: {},
+    interviewers: {},
   });
 
-  // const dailyAppointments = getAppointmentsForDay(state, state.days);
+  // const dailyAppointments = getAppointmentsForDay(state, state.day);
+  // const interview = getInterview(state, appointment.interview);
 
   const setDay = (day) => setState({ ...state, day });
 
   // const setDays = (days) => setState((prev) => ({ ...prev, days }));
 
   useEffect(() => {
-    Promise.all([axios.get("/api/days"), axios.get("/api/appointments")]).then(
-      (all) => {
-        const days = all[0].data;
-        const appointments = all[1].data;
-        setState((prev) => ({ ...prev, days, appointments }));
-      }
-    );
+    Promise.all([
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
+    ]).then((all) => {
+      const days = all[0].data;
+      const appointments = all[1].data;
+      const interviewers = all[2].data;
+      setState((prev) => ({ ...prev, days, appointments, interviewers }));
+    });
   }, []);
 
   // useEffect(() => {
@@ -121,7 +126,15 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {getAppointmentsForDay(state, state.day).map((appointment) => {
-          return <Appointment key={appointment.id} {...appointment} />;
+          const interview = getInterview(state, appointment.interview);
+          return (
+            <Appointment
+              key={appointment.id}
+              id={appointment.id}
+              time={appointment.time}
+              interview={interview}
+            />
+          );
         })}
         <Appointment key="last" time="5pm" />
       </section>
