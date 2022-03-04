@@ -75,16 +75,6 @@ test("getAppointmentsForDay returns an empty array when the day is not found", (
   expect(result.length).toEqual(0);
 });
 
-test("getAppointmentsForDay returns an array", () => {
-  const result = getAppointmentsForDay(state, "Monday");
-  expect(Array.isArray(result)).toBe(true);
-});
-
-test("getAppointmentsForDay returns an array with a length matching the number of appointments for that day", () => {
-  const result = getAppointmentsForDay(state, "Monday");
-  expect(result.length).toEqual(3);
-});
-
 test("getInterviewersForDay returns an array", () => {
   const result = getInterviewersForDay(state, "Monday");
   expect(Array.isArray(result)).toBe(true);
