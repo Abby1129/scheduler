@@ -10,17 +10,23 @@ export default function DayListItem(props) {
   });
 
   const formatSpots = (spots) => {
-    if (spots === 1) {
-      return "1 spot remaining";
-    } else if (spots === 0) {
+    if (spots === 0) {
       return "no spots remaining";
+    } else if (spots === 1) {
+      return "1 spot remaining";
     } else {
       return `${spots} spots remaining`;
     }
   };
 
   return (
-    <li className={dayClass} onClick={() => props.setDay(props.name)}>
+    <li
+      className={dayClass}
+      onClick={() => props.setDay(props.name)}
+      selected={props.selected}
+    >
+      {/* props.setDay is a function that is passed in as a prop from the parent
+    component (DayList) and is called when the li is clicked on. */}
       <h2 className="text--regular">{props.name}</h2>
       <h3 className="text--light">{formatSpots(props.spots)}</h3>
     </li>

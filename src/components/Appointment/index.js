@@ -4,9 +4,14 @@ import Header from "./Header";
 import Empty from "./Empty";
 import Show from "./Show";
 import Form from "./Form";
+import Status from "./Status";
 import { useVisualMode } from "hooks/useVisualMode";
 
 export default function Appointment(props) {
+  // console.log(props);
+  // console.log(props.interview.student);
+  // console.log(props.interview.interviewer.name);
+
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -22,11 +27,11 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer}
+          interviewer={props.interview.interviewer.name}
         />
       )}
       {mode === CREATE && (
-        <Form interviewers={[props.interviewer]} onCancel={() => back()} />
+        <Form interviewers={props.interviewers} onCancel={back} />
       )}
     </article>
   );

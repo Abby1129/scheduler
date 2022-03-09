@@ -10,8 +10,8 @@ export default function DayList(props) {
           key={day.id}
           name={day.name}
           spots={day.spots}
-          selected={day.name === props.day}
-          setDay={() => props.setDay(day.name)}
+          selected={day.name === props.value}
+          setDay={props.setDay} // setDay is a function that is passed in as a prop from the parent component (Application) and is called when the li is clicked on.
         />
       ))}
     </ul>
