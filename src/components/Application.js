@@ -21,10 +21,23 @@ export default function Application(props) {
     interviewers: {},
   });
 
-  //const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const setDay = (day) => setState({ ...state, day });
+
   const interviewers = getInterviewersForDay(state, state.day);
 
-  const setDay = (day) => setState({ ...state, day });
+  const bookInterview = function (id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    return axios.put(`/api/appointments/${id}`, appointment).then((res) => {
+      setState({ ...state, appointments });
+    });
+  };
 
   useEffect(() => {
     Promise.all([
@@ -79,6 +92,7 @@ export default function Application(props) {
               time={appointment.time}
               interview={interview}
               interviewers={interviewers}
+              bookInterview={bookInterview}
             />
           );
         })}
