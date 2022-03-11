@@ -12,16 +12,6 @@ import { useVisualMode } from "hooks/useVisualMode";
 import "components/Appointment/styles.scss";
 
 export default function Appointment(props) {
-  //console.log("Appointment props:", props);
-  // console.log("Appointment props.interview:", props.interview);
-  // console.log("Appointment props.interviewers:", props.interviewers);
-  // console.log("Appointment student:", props.interview.student);
-  // console.log("Appointment props.interview:", props.interview);
-  // console.log(
-  //   "Appointment props.interview.interviewer:",
-  //   props.interview.interviewer
-  // );
-
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -31,12 +21,22 @@ export default function Appointment(props) {
   const EDIT = "EDIT";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
+  const ERROR_NO_INTERVIEWER = "ERROR_NO_INTERVIEWER";
+  const ERROR_NO_NAME = "ERROR_NO_NAME";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
   const save = (name, interviewer) => {
+    if (interviewer === null) {
+      transition(ERROR_NO_INTERVIEWER, true);
+      return;
+    }
+    if (name === "") {
+      transition(ERROR_NO_NAME, true);
+      return;
+    }
     const interview = {
       student: name,
       interviewer,
@@ -76,8 +76,6 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer.name}
-          //interviewer={props.interviewers.name}
-          //interviewer={props.interview.student}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
@@ -108,6 +106,18 @@ export default function Appointment(props) {
       )}
       {mode === ERROR_DELETE && (
         <Error message="Could not delete due to an error" onClose={back} />
+      )}
+      {mode === ERROR_NO_INTERVIEWER && (
+        <Error
+          message="Can not create an appointment without an interviewer selected"
+          onClose={back}
+        />
+      )}
+      {mode === ERROR_NO_NAME && (
+        <Error
+          message="Can not create an appointment without a name"
+          onClose={back}
+        />
       )}
     </article>
   );
