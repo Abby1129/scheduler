@@ -1,7 +1,7 @@
 import {
   getAppointmentsForDay,
   getInterview,
-  getInterviewersForDay,
+  getInterviewsForDay,
 } from "helpers/selectors";
 
 const state = {
@@ -75,29 +75,29 @@ test("getAppointmentsForDay returns an empty array when the day is not found", (
   expect(result.length).toEqual(0);
 });
 
-test("getInterviewersForDay returns an array", () => {
-  const result = getInterviewersForDay(state, "Monday");
+test(" getInterviewsForDay returns an array", () => {
+  const result = getInterviewsForDay(state, "Monday");
   expect(Array.isArray(result)).toBe(true);
 });
 
-test("getInterviewersForDay returns an array with a length matching the number of INTERVIEWERS for that day", () => {
-  const result = getInterviewersForDay(state, "Monday");
+test(" getInterviewsForDay returns an array with a length matching the number of INTERVIEWERS for that day", () => {
+  const result = getInterviewsForDay(state, "Monday");
   expect(result.length).toEqual(2);
 });
 
-test("getInterviewersForDay returns an array containing the correct INTERVIEWER objects", () => {
-  const [first, second] = getInterviewersForDay(state, "Tuesday");
+test(" getInterviewsForDay returns an array containing the correct INTERVIEWER objects", () => {
+  const [first, second] = getInterviewsForDay(state, "Tuesday");
   expect(first).toEqual(state.interviewers["2"]);
   expect(second).toEqual(state.interviewers["1"]);
 });
 
-test("getInterviewersForDay returns an empty array when the days data is empty", () => {
-  const result = getInterviewersForDay({ days: [] }, "Monday");
+test(" getInterviewsForDay returns an empty array when the days data is empty", () => {
+  const result = getInterviewsForDay({ days: [] }, "Monday");
   expect(result.length).toEqual(0);
 });
 
-test("getInterviewersForDay returns an empty array when the day is not found", () => {
-  const result = getInterviewersForDay(state, "Wednesday");
+test(" getInterviewsForDay returns an empty array when the day is not found", () => {
+  const result = getInterviewsForDay(state, "Wednesday");
   expect(result.length).toEqual(0);
 });
 

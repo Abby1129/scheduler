@@ -11,19 +11,6 @@ export function useApplicationData() {
 
   const setDay = (day) => setState({ ...state, day });
 
-  useEffect(() => {
-    Promise.all([
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers"),
-    ]).then((all) => {
-      const days = all[0].data;
-      const appointments = all[1].data;
-      const interviewers = all[2].data;
-      setState((prev) => ({ ...prev, days, appointments, interviewers }));
-    });
-  }, []);
-
   const bookInterview = function (id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -34,8 +21,20 @@ export function useApplicationData() {
       [id]: appointment,
     };
 
+    const findDay = state.days.find((day) => day.appointments.includes(id));
+    const days = state.days.map((day, index) => {
+      if (
+        day.name === findDay.name &&
+        state.appointments[id].interview === null
+      ) {
+        return { ...day, spots: day.spots - 1 };
+      } else {
+        return day;
+      }
+    });
+
     return axios.put(`/api/appointments/${id}`, appointment).then((res) => {
-      setState({ ...state, appointments });
+      setState({ ...state, appointments, days });
     });
   };
 
@@ -49,10 +48,32 @@ export function useApplicationData() {
       [id]: appointment,
     };
 
-    return axios.delete(`/api/appointments/${id}`).then((res) => {
-      setState({ ...state, appointments });
+    const findDay = state.days.find((day) => day.appointments.includes(id));
+    const days = state.days.map((day, index) => {
+      if (day.name === findDay.name) {
+        return { ...day, spots: day.spots + 1 };
+      } else {
+        return day;
+      }
+    });
+
+    return axios.delete(`/api/appointments/${id}`, appointment).then((res) => {
+      setState({ ...state, appointments, days });
     });
   };
+
+  useEffect(() => {
+    Promise.all([
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
+    ]).then((all) => {
+      const days = all[0].data;
+      const appointments = all[1].data;
+      const interviewers = all[2].data;
+      setState((prev) => ({ ...prev, days, appointments, interviewers }));
+    });
+  }, []);
 
   return {
     state,

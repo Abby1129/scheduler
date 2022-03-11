@@ -1,5 +1,4 @@
 import React from "react";
-import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Empty from "./Empty";
 import Show from "./Show";
@@ -10,10 +9,18 @@ import Error from "./Error";
 
 import { useVisualMode } from "hooks/useVisualMode";
 
+import "components/Appointment/styles.scss";
+
 export default function Appointment(props) {
-  // console.log(props);
-  // console.log(props.interview.student);
-  // console.log(props.interview.interviewer.name);
+  //console.log("Appointment props:", props);
+  // console.log("Appointment props.interview:", props.interview);
+  // console.log("Appointment props.interviewers:", props.interviewers);
+  // console.log("Appointment student:", props.interview.student);
+  // console.log("Appointment props.interview:", props.interview);
+  // console.log(
+  //   "Appointment props.interview.interviewer:",
+  //   props.interview.interviewer
+  // );
 
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
@@ -61,7 +68,6 @@ export default function Appointment(props) {
         transition(ERROR_DELETE, true);
       });
   };
-
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -70,6 +76,8 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer.name}
+          //interviewer={props.interviewers.name}
+          //interviewer={props.interview.student}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
@@ -81,7 +89,7 @@ export default function Appointment(props) {
         <Form
           interviewers={props.interviewers}
           student={props.interview.student}
-          interviewer={props.interview.interviewer.id}
+          interviewer={props.interviewers.id}
           onCancel={back}
           onSave={save}
         />
