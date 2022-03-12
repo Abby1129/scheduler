@@ -2,8 +2,6 @@
 
 ### A single page application built with React. With this application, a user can create, edit and delete interview appointments. Postgress is used as database. The visual design, static html and CSS is provided. Components are built in isolation using Storybook. The webpack-dev-server provides a live environment that updates the the browser when a file is saved. Jest is used to implement a few features using test driven development.
 
-Note
-
 ## Setup
 
 ### Install dependencies with `npm install`.
