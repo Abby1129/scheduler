@@ -10,10 +10,8 @@ export function useVisualMode(initialMode) {
       setHistory((prev) => [...prev]);
     } else {
       setMode(newMode);
-      // setHistory([...history, newMode]); // add new mode to history
       setHistory((prev) => [...prev, newMode]);
     }
-    // console.log(history);
   };
 
   const back = () => {
@@ -21,7 +19,6 @@ export function useVisualMode(initialMode) {
       history.pop(); //Remove last history item
       setMode(history[history.length - 1]); //set mode to new last history item
     }
-    // console.log(history);
   };
 
   return { mode, transition, back };

@@ -4,7 +4,6 @@ import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
 export default function Form(props) {
-  console.log("Form props: ", props);
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
@@ -14,7 +13,6 @@ export default function Form(props) {
   };
 
   const cancel = () => {
-    console.log("clicked");
     reset();
     props.onCancel();
   };

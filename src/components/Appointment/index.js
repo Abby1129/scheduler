@@ -68,6 +68,7 @@ export default function Appointment(props) {
         transition(ERROR_DELETE, true);
       });
   };
+
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -109,13 +110,13 @@ export default function Appointment(props) {
       )}
       {mode === ERROR_NO_INTERVIEWER && (
         <Error
-          message="Can not create an appointment without an interviewer selected"
+          message="Cannot create an appointment without an interviewer selected"
           onClose={back}
         />
       )}
       {mode === ERROR_NO_NAME && (
         <Error
-          message="Can not create an appointment without a name"
+          message="Cannot create an appointment without a name"
           onClose={back}
         />
       )}

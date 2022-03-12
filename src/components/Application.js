@@ -16,7 +16,9 @@ import {
 export default function Application(props) {
   const { state, bookInterview, cancelInterview, setDay } =
     useApplicationData();
+
   const interviewers = getInterviewsForDay(state, state.day);
+
   return (
     <main className="layout">
       <section className="sidebar">

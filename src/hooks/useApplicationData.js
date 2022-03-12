@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export function useApplicationData() {
+  // Sets the initial state
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -11,6 +12,7 @@ export function useApplicationData() {
 
   const setDay = (day) => setState({ ...state, day });
 
+  // Adds a new appointment to the state and the database
   const bookInterview = function (id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -38,6 +40,7 @@ export function useApplicationData() {
     });
   };
 
+  // Deletes an appointment from the state and the database
   const cancelInterview = function (id) {
     const appointment = {
       ...state.appointments[id],
@@ -62,6 +65,7 @@ export function useApplicationData() {
     });
   };
 
+  // Fetches the data from the database and sets the state accordingly
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
