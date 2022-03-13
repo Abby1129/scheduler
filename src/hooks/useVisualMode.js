@@ -7,17 +7,16 @@ export function useVisualMode(initialMode) {
   const transition = (newMode, replace = false) => {
     if (replace) {
       setMode(newMode);
-      setHistory((prev) => [...prev]);
     } else {
       setMode(newMode);
-      setHistory((prev) => [...prev, newMode]);
+      setHistory((prev) => [...prev, mode]);
     }
   };
 
   const back = () => {
     if (history.length > 1) {
-      history.pop(); //Remove last history item
-      setMode(history[history.length - 1]); //set mode to new last history item
+      setHistory((prev) => prev.slice(0, -1));
+      setMode(history[history.length - 1]);
     }
   };
 
