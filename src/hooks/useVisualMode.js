@@ -11,12 +11,12 @@ export function useVisualMode(initialMode) {
       setMode(newMode);
       setHistory((prev) => [...prev, mode]);
     }
-  };
+};
 
   const back = () => {
-    if (history.length > 1) {
+    if (history.length > 1) { 
       setHistory((prev) => prev.slice(0, -1));
-      setMode(history[history.length - 1]);
+      setMode(history[history.length - 1]); 
     }
   };
 

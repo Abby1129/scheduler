@@ -27,14 +27,12 @@ export default function Appointment(props) {
   );
 
   const save = (name, interviewer) => {
-    if (interviewer === null) {
-      transition(ERROR_SAVE, true);
-      return;
+    if (interviewer === null || name === "") {
+      transition(ERROR_SAVE, true)
+      return
     }
-    if (name === "") {
-      transition(ERROR_SAVE, true);
-      return;
-    }
+ 
+
     const interview = {
       student: name,
       interviewer,
@@ -48,7 +46,7 @@ export default function Appointment(props) {
         transition(SHOW);
       })
       .catch((error) => {
-        transition(ERROR_SAVE, true);
+      transition(ERROR_SAVE, true);
       });
   };
 
@@ -73,7 +71,7 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer.name}
+          interviewer={props.interview.interviewer}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
@@ -101,8 +99,9 @@ export default function Appointment(props) {
       )}
       {mode === ERROR_SAVE && (
         <Error
-          message="Could not save due to an error. Please fill out all fields."
-          onClose={back}
+          message="Could not save due to an error. Please try again."
+          onClose={() => transition(CREATE)}
+          // onClose={back}
         />
       )}
       {mode === ERROR_DELETE && (

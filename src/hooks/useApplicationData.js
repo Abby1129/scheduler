@@ -14,6 +14,7 @@ export function useApplicationData() {
 
   // Adds a new appointment to the state and the database
   const bookInterview = function (id, interview) {
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
