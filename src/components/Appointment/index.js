@@ -100,7 +100,6 @@ export default function Appointment(props) {
       {mode === ERROR_SAVE && (
         <Error
           message="Could not save due to an error. Please try again."
-          // onClose={() => transition(CREATE)}
           onClose={back}
         />
       )}
